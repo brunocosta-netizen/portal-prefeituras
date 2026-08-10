@@ -376,6 +376,496 @@
         .filter-group select {
             margin-bottom: 0;
         }
+
+        /* Novo layout compacto para "Aguardando Resposta" */
+        .awaiting-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .awaiting-table thead {
+            background: #f3f4f6;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .awaiting-table th {
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #0A2540;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .awaiting-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #425466;
+        }
+
+        .awaiting-table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+        .awaiting-table tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        /* Status indicator circle */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .status-circle.green {
+            background-color: #60D676;
+            box-shadow: 0 0 0 4px rgba(96, 214, 118, 0.15);
+        }
+
+        .status-circle.yellow {
+            background-color: #EAB308;
+            box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.15);
+        }
+
+        .status-circle.red {
+            background-color: #EE553B;
+            box-shadow: 0 0 0 4px rgba(238, 85, 59, 0.15);
+        }
+
+        .awaiting-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-cobranca {
+            background: #f59e0b;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-cobranca:hover:not(:disabled) {
+            background: #d97706;
+            transform: translateY(-1px);
+        }
+
+        .btn-cobranca:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .tempo-sem-resposta {
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .tempo-sem-resposta.warning {
+            color: #92400e;
+        }
+
+        .tempo-sem-resposta.critical {
+            color: #EE553B;
+        }
+
+        /* Email Preview & Draft Modal */
+        .email-preview-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .email-preview-modal.active {
+            display: flex;
+        }
+
+        .email-preview-container {
+            background: white;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(10, 37, 64, 0.3);
+        }
+
+        .email-preview-header {
+            padding: 30px 40px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .email-preview-header h2 {
+            color: #0A2540;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .close-modal-btn {
+            background: #e5e7eb;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #0A2540;
+            transition: all 0.2s;
+        }
+
+        .close-modal-btn:hover {
+            background: #d1d5db;
+        }
+
+        .email-preview-body {
+            padding: 30px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .recipients-section, .templates-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .recipients-section h3, .templates-section h3 {
+            color: #0A2540;
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .recipient-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .recipient-item:hover {
+            background: #f3f4f6;
+            border-color: #00D4FF;
+        }
+
+        .recipient-item input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .recipient-item label {
+            flex: 1;
+            cursor: pointer;
+            margin: 0;
+            font-size: 14px;
+            color: #425466;
+        }
+
+        .template-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .template-tab {
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #546679;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .template-tab.active {
+            background: linear-gradient(90deg, #00D4FF, #60D676);
+            color: #0A2540;
+        }
+
+        .template-content {
+            display: none;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #425466;
+            font-family: 'Courier New', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .template-content.active {
+            display: block;
+        }
+
+        .template-info {
+            font-size: 12px;
+            color: #546679;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .email-preview-footer {
+            padding: 20px 40px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn-cancel {
+            background: #e5e7eb;
+            color: #0A2540;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel:hover {
+            background: #d1d5db;
+        }
+
+        .btn-send-draft {
+            background: linear-gradient(218deg, #60D676 0%, #00D4FF 100%);
+            color: #0A2540;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-send-draft:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Case Details Modal */
+        .case-details-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .case-details-modal.active {
+            display: flex;
+        }
+
+        .case-details-container {
+            background: white;
+            border-radius: 12px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(10, 37, 64, 0.3);
+        }
+
+        .case-details-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .case-details-header-info h2 {
+            color: #0A2540;
+            font-size: 18px;
+            margin: 0 0 8px 0;
+            font-weight: 600;
+        }
+
+        .case-details-header-info p {
+            color: #546679;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .case-status-badge {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .case-details-content {
+            padding: 25px 30px;
+        }
+
+        .case-detail-row {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .case-detail-label {
+            flex: 0 0 160px;
+            color: #546679;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .case-detail-value {
+            flex: 1;
+            color: #0A2540;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .case-problem-box {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #00D4FF;
+            margin-bottom: 20px;
+        }
+
+        .case-problem-box .case-detail-label {
+            flex: 0 0 auto;
+            margin-bottom: 8px;
+        }
+
+        .case-problem-box .case-detail-value {
+            color: #425466;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .case-details-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .case-details-footer button {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .case-details-footer .btn-close {
+            background: #e5e7eb;
+            color: #0A2540;
+        }
+
+        .case-details-footer .btn-close:hover {
+            background: #d1d5db;
+        }
+
+        .case-details-footer .btn-charge {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .case-details-footer .btn-charge:hover:not(:disabled) {
+            background: #d97706;
+        }
+
+        .case-details-footer .btn-charge:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Clickable table rows */
+        .awaiting-table tbody tr {
+            cursor: pointer;
+        }
+
+        .awaiting-table tbody tr:hover {
+            background-color: #f3f4f6;
+            box-shadow: inset 0 0 0 2px rgba(0, 212, 255, 0.1);
+        }
+
+        /* Situação Badges */
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-monitando {
+            background: rgba(96, 214, 118, 0.15);
+            color: #00A973;
+        }
+
+        .badge-atencao {
+            background: rgba(234, 179, 8, 0.15);
+            color: #92400e;
+        }
+
+        .badge-critico {
+            background: rgba(238, 85, 59, 0.15);
+            color: #EE553B;
+        }
     </style>
 </head>
 <body>
@@ -479,7 +969,7 @@
             <div class="card">
                 <h2>⏱️ Aguardando Resposta dos Órgãos</h2>
 
-                <div style="margin-bottom: 15px;">
+                <div style="margin-bottom: 20px;">
                     <label>Filtrar por pessoa:</label>
                     <select id="filterPessoa" onchange="updateHistory()">
                         <option value="">Todos</option>
@@ -537,6 +1027,98 @@
         </div>
     </div>
 
+    <!-- Case Details Modal -->
+    <div class="case-details-modal" id="caseDetailsModal">
+        <div class="case-details-container">
+            <div class="case-details-header">
+                <div class="case-details-header-info">
+                    <h2 id="caseDetailsTitle">-</h2>
+                    <p id="caseDetailsSubtitle">-</p>
+                </div>
+                <button class="close-modal-btn" onclick="closeCaseDetails()">✕</button>
+            </div>
+
+            <div class="case-details-content">
+                <div class="case-detail-row">
+                    <div class="case-detail-label">Órgão</div>
+                    <div class="case-detail-value" id="detailOrgao">-</div>
+                </div>
+
+                <div class="case-detail-row">
+                    <div class="case-detail-label">CNPJ</div>
+                    <div class="case-detail-value" id="detailCNPJ">-</div>
+                </div>
+
+                <div class="case-detail-row">
+                    <div class="case-detail-label">Quem Criou</div>
+                    <div class="case-detail-value" id="detailCreador">-</div>
+                </div>
+
+                <div class="case-detail-row">
+                    <div class="case-detail-label">Data de Envio</div>
+                    <div class="case-detail-value" id="detailData">-</div>
+                </div>
+
+                <div class="case-detail-row">
+                    <div class="case-detail-label">Email Para</div>
+                    <div class="case-detail-value" id="detailEmailOrgao">-</div>
+                </div>
+
+                <div class="case-detail-row">
+                    <div class="case-detail-label">Status</div>
+                    <div class="case-detail-value">
+                        <span id="detailStatusBadge"></span>
+                        <span id="detailElapsedTime" style="margin-left: 12px; color: #546679;"></span>
+                    </div>
+                </div>
+
+                <div class="case-problem-box">
+                    <div class="case-detail-label">Problema</div>
+                    <div class="case-detail-value" id="detailProblema">-</div>
+                </div>
+            </div>
+
+            <div class="case-details-footer">
+                <button class="btn-close" onclick="closeCaseDetails()">Fechar</button>
+                <button class="btn-charge" id="chargeButtonDetail" onclick="chargeFromDetails()">⚠️ Cobrar Resposta</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Preview & Draft Modal -->
+    <div class="email-preview-modal" id="emailPreviewModal">
+        <div class="email-preview-container">
+            <div class="email-preview-header">
+                <h2>📧 Preparar Email</h2>
+                <button class="close-modal-btn" onclick="closeEmailPreview()">✕</button>
+            </div>
+
+            <div class="email-preview-body">
+                <!-- SEÇÃO ESQUERDA: Destinatários -->
+                <div class="recipients-section">
+                    <h3>👥 Para Quem Enviar?</h3>
+                    <div id="recipientsList"></div>
+                </div>
+
+                <!-- SEÇÃO DIREITA: Modelos de Email -->
+                <div class="templates-section">
+                    <h3>📝 Escolha o Tom</h3>
+                    <div class="template-tabs">
+                        <button class="template-tab active" onclick="selectTemplate('cordial')">Cordial</button>
+                        <button class="template-tab" onclick="selectTemplate('direto')">Direto</button>
+                        <button class="template-tab" onclick="selectTemplate('urgente')">Urgente</button>
+                    </div>
+                    <div id="templateContent"></div>
+                </div>
+            </div>
+
+            <div class="email-preview-footer">
+                <button class="btn-cancel" onclick="closeEmailPreview()">Cancelar</button>
+                <button class="btn-send-draft" onclick="sendEmailDraft()">📧 Enviar para Rascunho</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let currentUser = null;
         let cases = JSON.parse(localStorage.getItem('cases')) || [];
@@ -585,48 +1167,279 @@
             }
         }
 
+        // Variável global para armazenar dados do caso sendo preparado
+        let currentCaseBeingPrepared = null;
+        let currentTemplate = 'cordial';
+
         // FORM SUBMIT
         document.getElementById('caseForm').addEventListener('submit', (e) => {
             e.preventDefault();
 
+            const nomePessoa = document.getElementById('nomePessoa').value;
+            const prefeitura = document.getElementById('prefeitura').value || '-';
+            const nomeCliente = document.getElementById('nomeCliente').value || '-';
+            const cpfCliente = document.getElementById('cpfCliente').value || '-';
+            const cnpj = document.getElementById('cnpj').value || '-';
+            const empresa = document.getElementById('empresa').value || '-';
+            const problema = document.getElementById('problema').value;
+            const emailOrgao = document.getElementById('emailOrgao').value;
+            const dataCriacao = new Date();
+
             const caseData = {
                 id: Date.now(),
-                criado_por: document.getElementById('nomePessoa').value,
+                nomePessoa: nomePessoa,
+                criado_por: nomePessoa,
                 email_criador: currentUser,
-                prefeitura: document.getElementById('prefeitura').value || '-',
-                nomeCliente: document.getElementById('nomeCliente').value || '-',
-                cpfCliente: document.getElementById('cpfCliente').value || '-',
-                cnpj: document.getElementById('cnpj').value || '-',
-                empresa: document.getElementById('empresa').value || '-',
-                problema: document.getElementById('problema').value,
-                emailOrgao: document.getElementById('emailOrgao').value,
+                prefeitura: prefeitura,
+                nomeCliente: nomeCliente,
+                cpfCliente: cpfCliente,
+                cnpj: cnpj,
+                empresa: empresa,
+                problema: problema,
+                emailOrgao: emailOrgao,
+                dataCriacao: dataCriacao.toISOString(),
                 arquivos: selectedFiles.map(f => f.name),
-                data: new Date().toLocaleDateString('pt-BR'),
+                data: dataCriacao.toLocaleDateString('pt-BR'),
                 status: 'montado',
                 resposta: null
             };
 
-            cases.unshift(caseData);
-            localStorage.setItem('cases', JSON.stringify(cases));
+            // Armazena o caso para preparação do email
+            currentCaseBeingPrepared = caseData;
 
-            document.getElementById('successMsg').classList.add('show');
-            setTimeout(() => document.getElementById('successMsg').classList.remove('show'), 3000);
+            // Abre modal de preparação de email
+            openEmailPreview(caseData);
 
             document.getElementById('caseForm').reset();
             selectedFiles = [];
-            updateHistory();
         });
+
+        // Abre o modal de preparação de email
+        function openEmailPreview(caseData) {
+            currentTemplate = 'cordial';
+            const modal = document.getElementById('emailPreviewModal');
+            modal.classList.add('active');
+
+            // Popula a seção de destinatários
+            populateRecipients(caseData);
+
+            // Gera e exibe os 3 modelos
+            generateTemplates(caseData);
+        }
+
+        // Fecha o modal
+        function closeEmailPreview() {
+            document.getElementById('emailPreviewModal').classList.remove('active');
+            currentCaseBeingPrepared = null;
+        }
+
+        // Popula lista de destinatários
+        function populateRecipients(caseData) {
+            const recipientsList = document.getElementById('recipientsList');
+
+            // Opção 1: Email do órgão informado
+            const recipients = [];
+            if (caseData.emailOrgao && caseData.emailOrgao !== '') {
+                recipients.push({
+                    label: `📧 ${caseData.emailOrgao}`,
+                    email: caseData.emailOrgao,
+                    type: 'órgão'
+                });
+            }
+
+            // Opção 2: Email genérico da prefeitura (se houver padrão)
+            if (caseData.prefeitura && caseData.prefeitura !== '-') {
+                // Simulação de emails comuns por prefeitura
+                const emailPrefeitura = `contato@${caseData.prefeitura.toLowerCase().replace(/\s+/g, '')}.gov.br`;
+                recipients.push({
+                    label: `🏢 ${caseData.prefeitura}`,
+                    email: emailPrefeitura,
+                    type: 'prefeitura'
+                });
+            }
+
+            // Opção 3: Seu próprio email (para teste/arquivo)
+            if (currentUser) {
+                recipients.push({
+                    label: `💾 Seu email (${currentUser})`,
+                    email: currentUser,
+                    type: 'arquivo'
+                });
+            }
+
+            // Renderiza os destinatários
+            recipientsList.innerHTML = recipients.map((r, idx) => `
+                <div class="recipient-item">
+                    <input type="radio" id="recipient_${idx}" name="recipient" value="${r.email}" ${idx === 0 ? 'checked' : ''}>
+                    <label for="recipient_${idx}">${r.label}</label>
+                </div>
+            `).join('');
+        }
+
+        // Gera os 3 modelos de email
+        function generateTemplates(caseData) {
+            const templates = {
+                cordial: {
+                    label: 'Cordial',
+                    tone: 'Amigável e respeitoso',
+                    email: gerarEmailTemplate(caseData, 'cordial')
+                },
+                direto: {
+                    label: 'Direto',
+                    tone: 'Objetivo e claro',
+                    email: gerarEmailTemplate(caseData, 'direto')
+                },
+                urgente: {
+                    label: 'Urgente',
+                    tone: 'Formal e insistente',
+                    email: gerarEmailTemplate(caseData, 'urgente')
+                }
+            };
+
+            window.templates = templates; // Armazena globalmente
+
+            // Renderiza primeira aba
+            selectTemplate('cordial');
+        }
+
+        // Seleciona um template
+        function selectTemplate(templateName) {
+            currentTemplate = templateName;
+
+            // Atualiza abas
+            document.querySelectorAll('.template-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Renderiza conteúdo
+            const templateContent = document.getElementById('templateContent');
+            const template = window.templates[templateName];
+
+            templateContent.innerHTML = `
+                <div class="template-content active">
+${template.email}</div>
+                <div class="template-info">
+                    <strong>Tom:</strong> ${template.tone}
+                </div>
+            `;
+        }
+
+        // Gera email de acordo com o tom
+        function gerarEmailTemplate(caseData, tom) {
+            let email = '';
+
+            const saudacoes = [
+                'Pessoal, bom dia!',
+                'Pessoal, bom dia! Tudo bem?',
+                'Pessoal, boa tarde! Tudo bem?'
+            ];
+            const saudacao = saudacoes[0];
+
+            if (tom === 'cordial') {
+                email = `${saudacao}\n\n`;
+                email += `Gostaria de verificar o status da solicitação desse cliente.\n\n`;
+                email += `Cliente: ${caseData.nomeCliente}\n`;
+                if (caseData.cnpj !== '-') email += `CNPJ: ${caseData.cnpj}\n`;
+                if (caseData.empresa !== '-') email += `Empresa: ${caseData.empresa}\n`;
+                email += `\nProblema: ${caseData.problema}\n\n`;
+                email += `O processo já foi enviado, porém ainda não tivemos atualização no sistema. Poderiam verificar, por gentileza, se existe alguma pendência ou se é necessário realizar alguma ação adicional?\n\n`;
+                email += `Obrigada!`;
+            } else if (tom === 'direto') {
+                email = `${saudacao}\n\n`;
+                email += `Preciso de ajuda com a situação desse cliente.\n\n`;
+                email += `Cliente: ${caseData.nomeCliente}\n`;
+                if (caseData.cnpj !== '-') email += `CNPJ: ${caseData.cnpj}\n`;
+                if (caseData.empresa !== '-') email += `Empresa: ${caseData.empresa}\n`;
+                email += `\nProblema: ${caseData.problema}\n\n`;
+                email += `Conseguem verificar para nós?\n\n`;
+                email += `Obrigada!`;
+            } else if (tom === 'urgente') {
+                email = `${saudacao}\n\n`;
+                email += `Preciso de uma ajuda com esse processo, por gentileza.\n\n`;
+                email += `Cliente: ${caseData.nomeCliente}\n`;
+                if (caseData.cnpj !== '-') email += `CNPJ: ${caseData.cnpj}\n`;
+                if (caseData.empresa !== '-') email += `Empresa: ${caseData.empresa}\n`;
+                email += `\nProblema: ${caseData.problema}\n\n`;
+                email += `Identificamos que a solicitação está sem atualização no sistema. Poderiam verificar se o processo está em análise ou se existe alguma pendência que esteja impedindo o andamento?\n\n`;
+                email += `Fico no aguardo. Obrigada!`;
+            }
+
+            return email;
+        }
+
+        // Envia o email para rascunho
+        function sendEmailDraft() {
+            if (!currentCaseBeingPrepared) return;
+
+            const selectedRecipient = document.querySelector('input[name="recipient"]:checked');
+            if (!selectedRecipient) {
+                alert('Por favor, selecione um destinatário');
+                return;
+            }
+
+            const emailOrgao = selectedRecipient.value;
+            const caseData = currentCaseBeingPrepared;
+
+            // Atualiza o email do órgão se foi selecionado outro
+            caseData.emailOrgao = emailOrgao;
+
+            // Salva o caso
+            cases.unshift(caseData);
+            localStorage.setItem('cases', JSON.stringify(cases));
+
+            // Usa o agente para gerar email final
+            if (window.portalAgent) {
+                const email = window.portalAgent.agent.generateEmailFromCase(caseData);
+                console.log(`\n✉️  EMAIL PARA RASCUNHO:`);
+                console.log(`   Destinatário: ${email.to}`);
+                console.log(`   Assunto: ${email.subject}`);
+                console.log(`   Tom: ${currentTemplate}`);
+
+                // Simula criação de rascunho
+                window.portalAgent.createDraftSimulation(email);
+            }
+
+            // Mostra mensagem de sucesso
+            closeEmailPreview();
+            const successMsg = document.getElementById('successMsg');
+            successMsg.classList.add('show');
+            setTimeout(() => successMsg.classList.remove('show'), 3000);
+
+            // Atualiza histórico
+            updateHistory();
+        }
 
         function calcularTempoDecorrido(data) {
             const [dia, mes, ano] = data.split('/');
             const dataCase = new Date(ano, mes - 1, dia);
             const agora = new Date();
             const diffMs = agora - dataCase;
-            const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-            const diffHoras = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const totalHoras = Math.floor(diffMs / (1000 * 60 * 60));
+            return totalHoras;
+        }
 
-            if (diffDias > 0) return `${diffDias}d ${diffHoras}h`;
-            return `${diffHoras}h`;
+        function calcularDiasDecorridos(data) {
+            const [dia, mes, ano] = data.split('/');
+            const dataCase = new Date(ano, mes - 1, dia);
+            const agora = new Date();
+            const diffMs = agora - dataCase;
+            const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            return diffDias;
+        }
+
+        function getStatusIndicator(dias) {
+            if (dias > 5) {
+                return { class: 'red', label: 'Crítico' };
+            } else if (dias > 2) {
+                return { class: 'yellow', label: 'Atenção' };
+            } else {
+                return { class: 'green', label: 'Novo' };
+            }
+        }
+
+        function isCobrancaEnabled(dias) {
+            return dias >= 1; // Habilitar após 1 dia
         }
 
         function updateHistory() {
@@ -646,30 +1459,79 @@
             if (awaiting.length === 0) {
                 awaitingContainer.innerHTML = '<div class="empty-state"><p>Nenhum caso aguardando resposta.</p></div>';
             } else {
-                awaitingContainer.innerHTML = awaiting.map(c => {
-                    const tempo = calcularTempoDecorrido(c.data);
-                    const dias = parseInt(tempo.match(/(\d+)d/)?.[1] || 0);
-                    let timeClass = 'time-counter';
-                    if (dias > 5) timeClass += ' critical';
-                    else if (dias > 2) timeClass += ' warning';
+                const tableRows = awaiting.map(c => {
+                    const horas = calcularTempoDecorrido(c.data);
+                    const dias = calcularDiasDecorridos(c.data);
+                    const status = getStatusIndicator(dias);
+                    const cobrancaEnabled = isCobrancaEnabled(dias);
+
+                    let tempoClass = 'tempo-sem-resposta';
+                    let situacaoBadge = 'Monitorando';
+                    let situacaoBadgeClass = 'badge-monitando';
+
+                    if (dias > 5) {
+                        tempoClass += ' critical';
+                        situacaoBadge = 'Crítico';
+                        situacaoBadgeClass = 'badge-critico';
+                    } else if (dias > 2) {
+                        tempoClass += ' warning';
+                        situacaoBadge = 'Atenção';
+                        situacaoBadgeClass = 'badge-atencao';
+                    }
+
+                    // Formata problema para resumo
+                    const problemaResumido = c.problema.substring(0, 40) + (c.problema.length > 40 ? '...' : '');
 
                     return `
-                        <div class="history-item">
-                            <h3>👤 ${c.criado_por}</h3>
-                            <p><strong>Cliente:</strong> ${c.nomeCliente}</p>
-                            <p><strong>Órgão:</strong> ${c.prefeitura}</p>
-                            <p><strong>CNPJ:</strong> ${c.cnpj}</p>
-                            <p><strong>Problema:</strong> ${c.problema.substring(0, 70)}...</p>
-                            <p><strong>Tempo:</strong> <span class="${timeClass}">⏱️ ${tempo}</span></p>
-                            <div style="margin-top: 10px; display: flex; gap: 10px;">
-                                <span class="status-badge status-pending">Monitorando...</span>
-                                <button style="background: #f59e0b; padding: 4px 12px; font-size: 12px;" onclick="cobranca(${c.id}, '${c.criado_por}', '${c.nomeCliente}', '${c.prefeitura}', '${c.emailOrgao}', '${c.problema}', '${c.cnpj}')">
-                                    ⚠️ Cobrar Resposta
-                                </button>
-                            </div>
-                        </div>
+                        <tr onclick="openCaseDetails(${c.id})">
+                            <td style="font-family: monospace; font-size: 12px; color: #00D4FF; font-weight: 600;">${c.id}</td>
+                            <td style="font-weight: 600;">${c.nomeCliente}</td>
+                            <td style="font-size: 13px;">${problemaResumido}</td>
+                            <td>
+                                <span class="badge ${situacaoBadgeClass}">${situacaoBadge}</span>
+                            </td>
+                            <td style="font-size: 13px;">${c.criado_por}</td>
+                            <td style="font-size: 13px; color: #546679;">${c.prefeitura}</td>
+                            <td>
+                                <span class="${tempoClass}" style="font-weight: 600;">${horas}h</span>
+                            </td>
+                            <td>
+                                <div class="status-indicator">
+                                    <div class="status-circle ${status.class}"></div>
+                                    <span style="font-size: 12px;">${status.label}</span>
+                                </div>
+                            </td>
+                            <td onclick="event.stopPropagation();">
+                                <div class="awaiting-actions">
+                                    <button class="btn-cobranca" ${cobrancaEnabled ? '' : 'disabled'} onclick="cobranca(${c.id}, '${c.criado_por}', '${c.nomeCliente}', '${c.prefeitura}', '${c.emailOrgao}', '${c.problema}', '${c.cnpj}')">
+                                        ${cobrancaEnabled ? '⚠️ Cobrar' : '—'}
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
                     `;
                 }).join('');
+
+                awaitingContainer.innerHTML = `
+                    <table class="awaiting-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Processo</th>
+                                <th>Situação</th>
+                                <th>Responsável</th>
+                                <th>Órgão</th>
+                                <th>Horas</th>
+                                <th>Status SLA</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${tableRows}
+                        </tbody>
+                    </table>
+                `;
             }
 
             if (responded.length === 0) {
@@ -688,21 +1550,66 @@
         }
 
         function cobranca(caseId, criador, cliente, orgao, email, problema, cnpj) {
-            alert(`
-📧 COBRANÇA CRIADA:
+            // Encontrar o caso no array para pegar a data de criação
+            const caso = cases.find(c => c.id === caseId);
+            if (!caso) return;
+
+            // Calcular dias decorridos
+            const [dia, mes, ano] = caso.data.split('/');
+            const dataCriacao = new Date(ano, mes - 1, dia);
+            const agora = new Date();
+            const diasDecorridos = Math.floor((agora - dataCriacao) / (1000 * 60 * 60 * 24));
+
+            // Preparar objeto caso para o agente
+            const caseObj = {
+                id: caseId,
+                nomePessoa: criador,
+                nomeCliente: cliente,
+                prefeitura: orgao,
+                emailOrgao: email,
+                problema: problema,
+                cnpj: cnpj,
+                dataCriacao: dataCriacao.toISOString(),
+                empresa: caso.empresa || '-'
+            };
+
+            // Usar o agente para gerar email de cobrança
+            if (window.portalAgent) {
+                const emailCobranca = window.portalAgent.generateFollowUpEmail(caseObj, diasDecorridos);
+
+                console.log(`\n📧 EMAIL DE COBRANÇA GERADO`);
+                console.log(`Ton: ${emailCobranca.tom}`);
+                console.log(`Destinatário: ${emailCobranca.to}`);
+                console.log(`Assunto: ${emailCobranca.subject}`);
+                console.log(`Dias decorridos: ${diasDecorridos}`);
+
+                // Criar simulação de rascunho
+                window.portalAgent.createDraftSimulation(emailCobranca);
+
+                alert(`
+📧 EMAIL DE COBRANÇA MONTADO:
+
+Destinatário: ${emailCobranca.to}
+Assunto: ${emailCobranca.subject}
+Tonalidade: ${emailCobranca.tom}
+Dias decorridos: ${diasDecorridos}
+
+✅ Email será deixado em rascunho para você revisar e enviar!
+                `);
+            } else {
+                // Fallback se o agente não estiver disponível
+                alert(`
+⚠️ Agente de emails não disponível
 
 Criador: ${criador}
 Cliente: ${cliente}
 CNPJ: ${cnpj}
 Órgão: ${orgao}
 Email: ${email}
-Problema: ${problema}
 
-✅ Email de cobrança será montado e deixado em rascunho para você enviar!
-            `);
-
-            // Aqui eu notificaria para criar o email de cobrança
-            console.log('Cobrança criada para caso:', caseId);
+Por favor, recarregue a página.
+                `);
+            }
         }
 
         function updateAnalytics() {
@@ -776,6 +1683,114 @@ Problema: ${problema}
             });
         }
 
+        // Abre modal com detalhes do caso
+        function openCaseDetails(caseId) {
+            const caso = cases.find(c => c.id === caseId);
+            if (!caso) return;
+
+            const dias = calcularDiasDecorridos(caso.data);
+            const horas = calcularTempoDecorrido(caso.data);
+            const status = getStatusIndicator(dias);
+
+            // Popula os detalhes
+            document.getElementById('caseDetailsTitle').textContent = caso.nomeCliente;
+            document.getElementById('caseDetailsSubtitle').textContent = `Criado em ${caso.data}`;
+            document.getElementById('detailOrgao').textContent = caso.prefeitura;
+            document.getElementById('detailCNPJ').textContent = caso.cnpj !== '-' ? caso.cnpj : 'Não informado';
+            document.getElementById('detailCreador').textContent = caso.criado_por;
+            document.getElementById('detailData').textContent = `${caso.data} às ${new Date(caso.dataCriacao).toLocaleTimeString('pt-BR')}`;
+            document.getElementById('detailEmailOrgao').textContent = caso.emailOrgao;
+            document.getElementById('detailProblema').textContent = caso.problema;
+
+            // Status indicator
+            const statusBadge = document.getElementById('detailStatusBadge');
+            statusBadge.innerHTML = `
+                <div class="status-indicator">
+                    <div class="status-circle ${status.class}"></div>
+                    <span style="font-size: 13px;">${status.label}</span>
+                </div>
+            `;
+
+            // Tempo decorrido
+            let tempoClass = '';
+            if (dias > 5) tempoClass = 'critical';
+            else if (dias > 2) tempoClass = 'warning';
+            document.getElementById('detailElapsedTime').innerHTML = `<span class="tempo-sem-resposta ${tempoClass}">${horas}h (${dias} dias)</span>`;
+
+            // Habilita/desabilita botão de cobrança
+            const chargeBtn = document.getElementById('chargeButtonDetail');
+            const cobrancaEnabled = isCobrancaEnabled(dias);
+            if (cobrancaEnabled) {
+                chargeBtn.disabled = false;
+                chargeBtn.textContent = '⚠️ Cobrar Resposta';
+            } else {
+                chargeBtn.disabled = true;
+                chargeBtn.textContent = 'Aguarde (menos de 1 dia)';
+            }
+
+            // Armazena referência do caso sendo visualizado
+            window.currentCaseDetailsView = caso;
+
+            // Abre modal
+            document.getElementById('caseDetailsModal').classList.add('active');
+        }
+
+        // Fecha modal de detalhes
+        function closeCaseDetails() {
+            document.getElementById('caseDetailsModal').classList.remove('active');
+            window.currentCaseDetailsView = null;
+        }
+
+        // Carrega email de cobrança a partir do modal de detalhes
+        function chargeFromDetails() {
+            if (!window.currentCaseDetailsView) return;
+
+            const caso = window.currentCaseDetailsView;
+            const [dia, mes, ano] = caso.data.split('/');
+            const dataCriacao = new Date(ano, mes - 1, dia);
+            const agora = new Date();
+            const diasDecorridos = Math.floor((agora - dataCriacao) / (1000 * 60 * 60 * 24));
+
+            const caseObj = {
+                id: caso.id,
+                nomePessoa: caso.criado_por,
+                nomeCliente: caso.nomeCliente,
+                prefeitura: caso.prefeitura,
+                emailOrgao: caso.emailOrgao,
+                problema: caso.problema,
+                cnpj: caso.cnpj,
+                dataCriacao: caso.dataCriacao,
+                empresa: caso.empresa || '-'
+            };
+
+            // Usa o agente para gerar email de cobrança
+            if (window.portalAgent) {
+                const emailCobranca = window.portalAgent.generateFollowUpEmail(caseObj, diasDecorridos);
+
+                console.log(`\n📧 EMAIL DE COBRANÇA GERADO`);
+                console.log(`Ton: ${emailCobranca.tom}`);
+                console.log(`Destinatário: ${emailCobranca.to}`);
+                console.log(`Dias decorridos: ${diasDecorridos}`);
+
+                window.portalAgent.createDraftSimulation(emailCobranca);
+
+                closeCaseDetails();
+                alert(`📧 EMAIL DE COBRANÇA MONTADO e enviado para rascunho!\n\nTon: ${emailCobranca.tom}\nPara: ${emailCobranca.to}`);
+            }
+        }
+
+        // Real-time monitoring: atualiza o tempo decorrido a cada minuto
+        setInterval(() => {
+            const historicoTab = document.getElementById('historico');
+            if (historicoTab && historicoTab.classList.contains('active')) {
+                // Só atualiza se a aba de histórico está visível
+                const awaitingContainer = document.getElementById('awaitingContainer');
+                if (awaitingContainer.querySelector('table')) {
+                    updateHistory();
+                }
+            }
+        }, 60000); // A cada 1 minuto
+
         // Recuperar login anterior
         if (localStorage.getItem('currentUser')) {
             currentUser = localStorage.getItem('currentUser');
@@ -785,5 +1800,18 @@ Problema: ${problema}
             updateHistory();
         }
     </script>
+
+    <!-- Email Communication System (ORDEM IMPORTANTE) -->
+    <script src="email-communication-guide.js"></script>
+    <script src="email-spell-checker.js"></script>
+    <script src="email-agent.js"></script>
+
+    <!-- Email Learning & Validation System -->
+    <script src="email-learning-manager.js"></script>
+    <script src="email-validation-ui.js"></script>
+    <script src="email-reports-generator.js"></script>
+
+    <!-- Portal Agent Integration (deve estar por último) -->
+    <script src="portal-agent-integration.js"></script>
 </body>
 </html>
