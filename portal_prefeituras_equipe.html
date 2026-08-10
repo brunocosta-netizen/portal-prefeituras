@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Monitoramento Prefeituras - Caveo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1f4e78 0%, #2a5fa0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-container h1 {
+            color: #1f4e78;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .login-container p {
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #1f4e78;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: #1f4e78;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-login:hover {
+            background: #1a3a5c;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .error-msg.show {
+            display: block;
+        }
+
+        /* Estilo do Portal */
+        .portal-container {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .portal-header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .portal-header h1 {
+            color: #1f4e78;
+            font-size: 22px;
+        }
+
+        .user-info {
+            text-align: right;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: #e5e7eb;
+            color: #374151;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: #1f4e78;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #1f4e78;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        textarea, input[type="text"], input[type="email"], select, input[type="file"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #1f4e78;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #1a3a5c;
+        }
+
+        .history-item {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border-left: 4px solid #ef4444;
+        }
+
+        .history-item.responded {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .history-item h3 {
+            color: #1f4e78;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .history-item p {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-replied {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .time-counter {
+            font-size: 12px;
+            font-weight: 600;
+            color: #059669;
+            background: #d1fae5;
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+
+        .time-counter.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .time-counter.critical {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .success-msg {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .success-msg.show {
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #9ca3af;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group select {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN -->
+    <div class="login-container" id="loginContainer">
+        <h1>🔐 Portal Caveo</h1>
+        <p>Monitoramento de Solicitações a Prefeituras</p>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Email @caveo.com.br</label>
+                <input type="email" id="emailInput" placeholder="seu.email@caveo.com.br" required>
+                <div class="error-msg" id="errorMsg">⚠️ Use um email @caveo.com.br válido</div>
+            </div>
+            <button type="submit" class="btn-login">Entrar</button>
+        </form>
+    </div>
+
+    <!-- PORTAL -->
+    <div class="portal-container" id="portalContainer">
+        <div class="portal-header">
+            <h1>📊 Portal Monitoramento Prefeituras</h1>
+            <div class="user-info">
+                <div>Logado como: <strong id="userEmail"></strong></div>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('novo-caso')">📨 Novo Caso</button>
+            <button class="tab-btn" onclick="switchTab('historico')">📋 Histórico</button>
+            <button class="tab-btn" onclick="switchTab('analytics')">📊 Analytics</button>
+        </div>
+
+        <!-- ABA: NOVO CASO -->
+        <div id="novo-caso" class="tab-content active">
+            <div class="card">
+                <h2>Criar Nova Solicitação</h2>
+                <div class="success-msg" id="successMsg">✅ Caso criado com sucesso!</div>
+                <form id="caseForm">
+                    <div class="form-row">
+                        <div>
+                            <label>Seu Nome *</label>
+                            <select id="nomePessoa" required>
+                                <option value="">Selecione seu nome</option>
+                                <option value="Leandro Landim">Leandro Landim</option>
+                                <option value="Bruno Souza">Bruno Souza</option>
+                                <option value="Fabiane Carneiro">Fabiane Carneiro</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Prefeitura/Órgão</label>
+                            <input type="text" id="prefeitura" placeholder="Ex: Prefeitura de Belém PA">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div>
+                            <label>Nome do Cliente</label>
+                            <input type="text" id="nomeCliente" placeholder="Ex: Thiago José Maués">
+                        </div>
+                        <div>
+                            <label>CPF do Cliente</label>
+                            <input type="text" id="cpfCliente" placeholder="Ex: 123.456.789-10">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div>
+                            <label>CNPJ da Empresa</label>
+                            <input type="text" id="cnpj" placeholder="Ex: 68.123.219/0001-11">
+                        </div>
+                        <div>
+                            <label>Nome da Empresa</label>
+                            <input type="text" id="empresa" placeholder="Ex: EMPRESA LTDA">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Descreva o Problema *</label>
+                        <textarea id="problema" placeholder="O que está acontecendo?" required></textarea>
+                    </div>
+
+                    <div>
+                        <label>Email do Órgão (Para Enviar) *</label>
+                        <input type="email" id="emailOrgao" placeholder="Ex: atendimento@sefin.pmb.pa.gov.br" required>
+                    </div>
+
+                    <div>
+                        <label>Anexar Documentos</label>
+                        <input type="file" id="arquivos" multiple>
+                        <div id="fileList"></div>
+                    </div>
+
+                    <button type="submit">📨 Criar Caso</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ABA: HISTÓRICO -->
+        <div id="historico" class="tab-content">
+            <div class="card">
+                <h2>⏱️ Aguardando Resposta dos Órgãos</h2>
+
+                <div style="margin-bottom: 15px;">
+                    <label>Filtrar por pessoa:</label>
+                    <select id="filterPessoa" onchange="updateHistory()">
+                        <option value="">Todos</option>
+                        <option value="Leandro Landim">Leandro Landim</option>
+                        <option value="Bruno Souza">Bruno Souza</option>
+                        <option value="Fabiane Carneiro">Fabiane Carneiro</option>
+                    </select>
+                </div>
+
+                <div id="awaitingContainer">
+                    <div class="empty-state">
+                        <p>Nenhum caso aguardando resposta.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>✅ Respondidos</h2>
+                <div id="respondedContainer">
+                    <div class="empty-state">
+                        <p>Nenhum caso respondido ainda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA: ANALYTICS -->
+        <div id="analytics" class="tab-content">
+            <div class="card">
+                <h2>📊 Tempo de Resposta por Órgão</h2>
+
+                <div class="filter-group">
+                    <select id="periodoFilter">
+                        <option value="semana">Semanal</option>
+                        <option value="mes">Mensal</option>
+                        <option value="trimestre">Trimestral</option>
+                        <option value="ano">Anual</option>
+                    </select>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="chart-container">
+                        <canvas id="tempoRespostaChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="volumeCasosChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 15px; color: #1f4e78;">Taxa de Resposta por Órgão</h3>
+                    <canvas id="taxaRespostaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let cases = JSON.parse(localStorage.getItem('cases')) || [];
+        let selectedFiles = [];
+
+        // LOGIN
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('emailInput').value;
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (!email.endsWith('@caveo.com.br')) {
+                errorMsg.classList.add('show');
+                return;
+            }
+
+            currentUser = email;
+            localStorage.setItem('currentUser', currentUser);
+            errorMsg.classList.remove('show');
+
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('portalContainer').style.display = 'block';
+            document.getElementById('userEmail').textContent = email;
+
+            updateHistory();
+            updateAnalytics();
+        });
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('portalContainer').style.display = 'none';
+            document.getElementById('loginForm').reset();
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'analytics') {
+                setTimeout(updateAnalytics, 100);
+            }
+        }
+
+        // FORM SUBMIT
+        document.getElementById('caseForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const caseData = {
+                id: Date.now(),
+                criado_por: document.getElementById('nomePessoa').value,
+                email_criador: currentUser,
+                prefeitura: document.getElementById('prefeitura').value || '-',
+                nomeCliente: document.getElementById('nomeCliente').value || '-',
+                cpfCliente: document.getElementById('cpfCliente').value || '-',
+                cnpj: document.getElementById('cnpj').value || '-',
+                empresa: document.getElementById('empresa').value || '-',
+                problema: document.getElementById('problema').value,
+                emailOrgao: document.getElementById('emailOrgao').value,
+                arquivos: selectedFiles.map(f => f.name),
+                data: new Date().toLocaleDateString('pt-BR'),
+                status: 'montado',
+                resposta: null
+            };
+
+            cases.unshift(caseData);
+            localStorage.setItem('cases', JSON.stringify(cases));
+
+            document.getElementById('successMsg').classList.add('show');
+            setTimeout(() => document.getElementById('successMsg').classList.remove('show'), 3000);
+
+            document.getElementById('caseForm').reset();
+            selectedFiles = [];
+            updateHistory();
+        });
+
+        function calcularTempoDecorrido(data) {
+            const [dia, mes, ano] = data.split('/');
+            const dataCase = new Date(ano, mes - 1, dia);
+            const agora = new Date();
+            const diffMs = agora - dataCase;
+            const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            const diffHoras = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+            if (diffDias > 0) return `${diffDias}d ${diffHoras}h`;
+            return `${diffHoras}h`;
+        }
+
+        function updateHistory() {
+            const filtro = document.getElementById('filterPessoa').value;
+            let awaiting = cases.filter(c => !c.resposta);
+            let responded = cases.filter(c => c.resposta);
+
+            // Aplicar filtro se selecionado
+            if (filtro) {
+                awaiting = awaiting.filter(c => c.criado_por === filtro);
+                responded = responded.filter(c => c.criado_por === filtro);
+            }
+
+            const awaitingContainer = document.getElementById('awaitingContainer');
+            const respondedContainer = document.getElementById('respondedContainer');
+
+            if (awaiting.length === 0) {
+                awaitingContainer.innerHTML = '<div class="empty-state"><p>Nenhum caso aguardando resposta.</p></div>';
+            } else {
+                awaitingContainer.innerHTML = awaiting.map(c => {
+                    const tempo = calcularTempoDecorrido(c.data);
+                    const dias = parseInt(tempo.match(/(\d+)d/)?.[1] || 0);
+                    let timeClass = 'time-counter';
+                    if (dias > 5) timeClass += ' critical';
+                    else if (dias > 2) timeClass += ' warning';
+
+                    return `
+                        <div class="history-item">
+                            <h3>👤 ${c.criado_por}</h3>
+                            <p><strong>Cliente:</strong> ${c.nomeCliente}</p>
+                            <p><strong>Órgão:</strong> ${c.prefeitura}</p>
+                            <p><strong>CNPJ:</strong> ${c.cnpj}</p>
+                            <p><strong>Problema:</strong> ${c.problema.substring(0, 70)}...</p>
+                            <p><strong>Tempo:</strong> <span class="${timeClass}">⏱️ ${tempo}</span></p>
+                            <div style="margin-top: 10px; display: flex; gap: 10px;">
+                                <span class="status-badge status-pending">Monitorando...</span>
+                                <button style="background: #f59e0b; padding: 4px 12px; font-size: 12px;" onclick="cobranca(${c.id}, '${c.criado_por}', '${c.nomeCliente}', '${c.prefeitura}', '${c.emailOrgao}', '${c.problema}', '${c.cnpj}')">
+                                    ⚠️ Cobrar Resposta
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if (responded.length === 0) {
+                respondedContainer.innerHTML = '<div class="empty-state"><p>Nenhum caso respondido.</p></div>';
+            } else {
+                respondedContainer.innerHTML = responded.map(c => `
+                    <div class="history-item responded">
+                        <h3>✅ ${c.criado_por}</h3>
+                        <p><strong>Cliente:</strong> ${c.nomeCliente}</p>
+                        <p><strong>Órgão:</strong> ${c.prefeitura}</p>
+                        <p><strong>CNPJ:</strong> ${c.cnpj}</p>
+                        <span class="status-badge status-replied">Respondido</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function cobranca(caseId, criador, cliente, orgao, email, problema, cnpj) {
+            alert(`
+📧 COBRANÇA CRIADA:
+
+Criador: ${criador}
+Cliente: ${cliente}
+CNPJ: ${cnpj}
+Órgão: ${orgao}
+Email: ${email}
+Problema: ${problema}
+
+✅ Email de cobrança será montado e deixado em rascunho para você enviar!
+            `);
+
+            // Aqui eu notificaria para criar o email de cobrança
+            console.log('Cobrança criada para caso:', caseId);
+        }
+
+        function updateAnalytics() {
+            const periodo = document.getElementById('periodoFilter').value;
+
+            // Simular dados para gráficos
+            const orgaos = [...new Set(cases.map(c => c.prefeitura).filter(p => p !== '-'))];
+            const tempos = orgaos.map(() => Math.floor(Math.random() * 15) + 2);
+
+            // Gráfico 1: Tempo de Resposta
+            const ctx1 = document.getElementById('tempoRespostaChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: orgaos.length > 0 ? orgaos : ['Sem dados'],
+                    datasets: [{
+                        label: 'Dias para resposta',
+                        data: tempos,
+                        backgroundColor: '#1f4e78',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            // Gráfico 2: Volume de Casos
+            const volumeOrgaos = orgaos.map(o => cases.filter(c => c.prefeitura === o).length);
+            const ctx2 = document.getElementById('volumeCasosChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: orgaos.length > 0 ? orgaos : ['Sem dados'],
+                    datasets: [{
+                        data: volumeOrgaos.length > 0 ? volumeOrgaos : [1],
+                        backgroundColor: ['#1f4e78', '#2a5fa0', '#3a7fb8', '#4a8fc8']
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            // Gráfico 3: Taxa de Resposta
+            const taxasResposta = orgaos.map(o => {
+                const total = cases.filter(c => c.prefeitura === o).length;
+                const respondidos = cases.filter(c => c.prefeitura === o && c.resposta).length;
+                return total > 0 ? Math.round((respondidos / total) * 100) : 0;
+            });
+
+            const ctx3 = document.getElementById('taxaRespostaChart').getContext('2d');
+            new Chart(ctx3, {
+                type: 'line',
+                data: {
+                    labels: orgaos.length > 0 ? orgaos : ['Sem dados'],
+                    datasets: [{
+                        label: 'Taxa de Resposta (%)',
+                        data: taxasResposta.length > 0 ? taxasResposta : [0],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: true } },
+                    scales: { y: { beginAtZero: true, max: 100 } }
+                }
+            });
+        }
+
+        // Recuperar login anterior
+        if (localStorage.getItem('currentUser')) {
+            currentUser = localStorage.getItem('currentUser');
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('portalContainer').style.display = 'block';
+            document.getElementById('userEmail').textContent = currentUser;
+            updateHistory();
+        }
+    </script>
+</body>
+</html>
